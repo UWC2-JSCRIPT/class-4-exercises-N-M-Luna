@@ -5,11 +5,23 @@ const blackjackDeck = getDeck();
  * @constructor
  * @param {string} name - The name of the player
  */
-class CardPlayer {}; //TODO
+class CardPlayer {
+  constructor(name) {
+    this.name = name;
+    this.hand = []
+  }
+
+  drawCard() { 
+    //Pick a random card
+    const i = Math.ceil(Math.random()*blackjackDeck.length)
+    const card = blackjackDeck[i]
+    this.hand.push(card)
+  }
+}; 
 
 // CREATE TWO NEW CardPlayers
-const dealer; // TODO
-const player; // TODO
+const dealer = new CardPlayer('Dealer'); 
+const player = new CardPlayer('Player'); 
 
 /**
  * Calculates the score of a Blackjack hand
@@ -19,8 +31,27 @@ const player; // TODO
  * @returns {boolean} blackJackScore.isSoft
  */
 const calcPoints = (hand) => {
-  // CREATE FUNCTION HERE
+  let total = 0
+  let isSoft = false
 
+  // Add values of cards (add 1 point for each ace)
+  hand.forEach(card => {
+    if (card.displayVal === 'Ace'){
+      aces++
+      total++
+    } else {
+    total += card.val
+    }
+  })
+
+  // If there is an Ace in the hand, and it can be 11 without bringing the total points over 21,
+  if (aces>0 && total <=11) {
+    // Then make the Ace worth 11
+    total += 10
+    isSoft = true
+  }
+  
+  return {total, isSoft}
 }
 
 /**
