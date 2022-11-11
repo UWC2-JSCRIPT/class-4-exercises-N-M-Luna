@@ -70,8 +70,14 @@ const calcPoints = (hand) => {
  * @returns {boolean} whether dealer should draw another card
  */
 const dealerShouldDraw = (dealerHand) => {
-  // CREATE FUNCTION HERE
-
+  const dealerScore = calcPoints(dealerHand)
+  if (dealerScore < 16) {
+    return true
+  } else if (dealerScore === 17) {
+    return isSoft
+  } else { // if dealerScore > 17 
+    return false
+  } 
 }
 
 /**
