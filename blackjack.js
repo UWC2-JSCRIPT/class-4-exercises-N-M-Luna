@@ -87,8 +87,19 @@ const dealerShouldDraw = (dealerHand) => {
  * @returns {string} Shows the player's score, the dealer's score, and who wins
  */
 const determineWinner = (playerScore, dealerScore) => {
-  // CREATE FUNCTION HERE
+  let winner 
+  if (playerScore > dealerScore) {
+    winner = `Player`
+  } else if (playerScore === dealerScore) {
+    winner = `It's a tie.`
+  } else { //if (playerScore < dealerScore)
+    winner = `Dealer`
+  }
 
+  return `Score:
+  Player: ${playerScore} points
+  Dealer: ${dealerScore} points
+  Winner: ${winner}`
 }
 
 /**
@@ -143,4 +154,4 @@ const startGame = function() {
 
   return determineWinner(playerScore, dealerScore);
 }
-// console.log(startGame());
+console.log(startGame());
