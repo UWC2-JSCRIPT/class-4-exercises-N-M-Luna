@@ -33,25 +33,34 @@ const player = new CardPlayer('Player');
 const calcPoints = (hand) => {
   let total = 0
   let isSoft = false
+  let firstAce = true
 
-  // Add values of cards (add 1 point for each ace)
+  // Add values of cards 
   hand.forEach(card => {
-    if (card.displayVal === 'Ace'){
-      aces++
-      total++
-    } else {
     total += card.val
+    if (card.displayVal === 'Ace'){
+      if (firstAce) {
+        // 1st ace drawn is soft
+        isSoft = true
+        firstAce = false
+      } else {
+        // 2nd+ ace drawn: +1
+        total -= 10
+      }
+    } 
+    //If the count goes over 21 and there's an ace that's being counted as 11,
+    if (total > 21 && isSoft) {
+      // The ace now counts as 1
+      total -= 10
+      isSoft = false
     }
   })
 
-  // If there is an Ace in the hand, and it can be 11 without bringing the total points over 21,
-  if (aces>0 && total <=11) {
-    // Then make the Ace worth 11
-    total += 10
-    isSoft = true
+  const blackJackScore = {
+    total: total, 
+    isSoft: isSoft
   }
-  
-  return {total, isSoft}
+  return blackJackScore
 }
 
 /**
