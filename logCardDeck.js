@@ -58,4 +58,18 @@ const cards = [
  *
  * @param {array} deck A deck of cards
  */
-const logCardDeck = deck => {};
+const logCardDeck = deck => {
+  //Loop through each card in the deck array
+  deck.forEach(card => {
+    //Print each card's properties
+    console.log(`{`)
+    //Save the card's values
+    const properties = Object.values(card)
+    properties.forEach(prop => {
+      console.log(prop)
+    })
+    console.log(`}`)
+  })
+};
+
+logCardDeck(cards)
