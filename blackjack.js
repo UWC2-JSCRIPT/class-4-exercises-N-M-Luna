@@ -126,10 +126,17 @@ const showHand = (player) => {
 const startGame = function() {
   player.drawCard();
   dealer.drawCard();
-  player.drawCard();
-  dealer.drawCard();
-
+  player.drawCard(); // if player.score === 21, player wins
   let playerScore = calcPoints(player.hand).total;
+  if (playerScore === 21) {
+    return determineWinner(playerScore, dealerScore);
+  }
+  dealer.drawCard(); // if dealer.score === 21, dealer wins
+  let dealerScore = calcPoints(dealer.hand).total;
+  if (dealerScore === 21) {
+    return determineWinner(playerScore, dealerScore);
+  }
+  
   showHand(player);
   while (playerScore < 21 && confirm(getMessage(playerScore, dealer.hand[0]))) {
     player.drawCard();
@@ -140,8 +147,7 @@ const startGame = function() {
     return 'You went over 21 - you lose!';
   }
   console.log(`Player stands at ${playerScore}`);
-
-  let dealerScore = calcPoints(dealer.hand).total;
+  
   while (dealerScore < 21 && dealerShouldDraw(dealer.hand)) {
     dealer.drawCard();
     dealerScore = calcPoints(dealer.hand).total;
